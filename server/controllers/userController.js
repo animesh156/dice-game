@@ -12,7 +12,7 @@ const generateToken = (res, userId) => {
     res.cookie("jwt", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-        sameSite: "none",
+        sameSite: "Strict",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 };
@@ -46,16 +46,16 @@ const registerUser = async (req,res) => {
         name,
         email,
         password: hashedPassword,
-        role
+       
     })
 
     if(user) {
         generateToken(res, user._id);
         res.status(201).json({
-            Id: user._id,
+            id: user._id,
             name: user.name,
             email: user.email,
-            role: user.role
+           
 
         });
     } else {
@@ -77,7 +77,7 @@ const loginUser = async (req,res) => {
    if(user && (await bcrypt.compare(password, user.password))) {
     generateToken(res, user._id);
     res.json({
-        _id: user._id,
+        id: user._id,
         name: user.name,
         email: user.email,
         role: user.role
