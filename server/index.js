@@ -7,7 +7,7 @@ const userRoutes = require('./routes/userRoute')
 const gameRoutes = require('./routes/gameRoutes')
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 
 connectDB()   // connect to DB
 

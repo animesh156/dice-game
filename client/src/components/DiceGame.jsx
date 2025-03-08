@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // For navigation after logout
 import API from "../utils/api";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,7 +10,7 @@ const DiceGame = () => {
   const [rollResult, setRollResult] = useState(null);
   const [rolling, setRolling] = useState(false);
   const [animatedRoll, setAnimatedRoll] = useState(1); // Temporary rolling dice face
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -18,14 +19,12 @@ const DiceGame = () => {
         setBalance(response.data.balance);
       } catch (error) {
         toast.error("Failed to load balance");
-        console.log(error)
+        console.log(error);
       }
     };
 
     fetchBalance();
   }, []);
-
-
 
   const handleRollDice = async () => {
     if (bet <= 0 || bet > balance) {
@@ -81,11 +80,35 @@ const DiceGame = () => {
     }
   };
 
-  const userName = localStorage.getItem("userName") || "guest"
+  const userName = localStorage.getItem("userName") || "guest";
+
+  // Logout function
+  const handleLogout = async () => {
+    await API.post("/user/logout", {}, { withCredentials: true });
+    toast.success("Logged out successfully");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("isAuthenticated");
+
+    setTimeout(() => {
+      navigate("/login"); // Redirect to login page
+    }, 2000);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-6">
-      <h1 className="mb-12 -mt-16 text-pink-500 font-bold text-lg">Welome, <span className="uppercase">  {userName} </span></h1>
+      {/* Logout Button */}
+      <button
+        onClick={handleLogout}
+        className="absolute top-6 right-6 bg-red-500 hover:cursor-pointer hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg transition"
+      >
+        Logout
+      </button>
+
+      {/* Welcome Message */}
+      <h1 className="mb-12 -mt-16 text-pink-500 font-bold text-lg">
+        Welcome, <span className="uppercase">{userName}</span>
+      </h1>
+
       {/* Dice Rolling Effect */}
       <div className="flex gap-2 mb-6">
         {[1, 2, 3, 4, 5, 6].map((num) => (
