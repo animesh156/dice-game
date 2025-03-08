@@ -43,7 +43,7 @@ function Register() {
     <div className="h-screen flex justify-center items-center bg-cover bg-center"  style={{ backgroundImage: `url("https://res.cloudinary.com/dmdlgpurh/image/upload/v1741415613/bg_1_psbhmx.jpg")` }}>
       <ToastContainer />
       <div className="backdrop-blur-lg  bg-white/30  border  border-gray-600/20 shadow-lg rounded-lg p-8 w-80 md:w-96">
-        <h1 className="text-center text-2xl mb-3 font-bold dark:text-white">Register</h1>
+        <h1 className="text-center text-2xl mb-3 font-bold ">Register</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -87,7 +87,7 @@ function Register() {
           </div>
 
           <div>
-            <p className="text-center dark:text-white">
+            <p className="text-center">
               Already have an account?{" "}
               <Link to="/login" className="text-blue-500 hover:underline">
                 Sign In
