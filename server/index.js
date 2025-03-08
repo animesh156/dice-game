@@ -2,9 +2,13 @@ const express = require("express");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const connectDB = require('./config/db')
+const userRoutes = require('./routes/userRoute')
 
 const app = express();
 const port = process.env.PORT || 5000;
+
+connectDB()   // connect to DB
 
 
 app.use(
@@ -17,9 +21,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
-  res.json("Dice game");
-});
+app.use('/api/user', userRoutes)
 
 // Start server
 app.listen(port, () => {
