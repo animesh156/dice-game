@@ -10,9 +10,7 @@ function Home() {
     const isAuthorize = localStorage.getItem("isAuthenticated");
 
     if (!isAuthorize) {
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+     navigate('/login')
     }
   }, [navigate]);
 
